@@ -1,22 +1,13 @@
 {
-  "extends": [
-    "config:base",
-    ":rebaseStalePrs",
-    ":semanticCommits"
-  ],
-  "assignees": [
-    "sara-ladisa"
-  ],
+  "extends": ["config:base", ":rebaseStalePrs", ":semanticCommits"],
+  "assignees": ["sara-ladisa", "giuliosalotti"],
   "automerge": true,
   "dependencyDashboard": true,
   "includeForks": true,
   "packageRules": [
     {
       "description": "Updates to GitHub Actions should be tagged as 'ci'",
-      "matchPaths": [
-        ".github/workflows/*.yml",
-        ".github/workflows/*.yaml"
-      ],
+      "matchPaths": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
       "semanticCommitType": "ci"
     }
   ],
