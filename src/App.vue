@@ -1,85 +1,104 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { computed, ref } from 'vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+
+import { lang, setLang, t, type Lang } from '@/i18n'
+import { homeFor } from '@/router'
+import { useAuthStore } from '@/stores/auth'
+import { useBookingStore } from '@/stores/booking'
+
+const auth = useAuthStore()
+const router = useRouter()
+const menuOpen = ref(false)
+
+const links = computed(() => {
+  if (auth.role === 'STUDENT')
+    return [
+      { to: { name: 'ask' }, label: t('navAsk') },
+      { to: { name: 'bookings' }, label: t('navBookings') },
+    ]
+  if (auth.role === 'EMPLOYEE')
+    return [
+      { to: { name: 'queue' }, label: t('navQueue') },
+      { to: { name: 'availability' }, label: t('navAvail') },
+      { to: { name: 'profile' }, label: t('navProfile') },
+    ]
+  return []
+})
+
+const roleLabel = computed(() =>
+  auth.role === 'STUDENT'
+    ? `${t('roleStudent')} · ${auth.user?.matricola}`
+    : auth.role === 'EMPLOYEE'
+      ? t('roleEmployee')
+      : t('roleAdmin'),
+)
+
+const langs: Lang[] = ['it', 'en']
+
+async function signOut() {
+  menuOpen.value = false
+  useBookingStore().reset()
+  await auth.logout()
+  router.push({ name: 'login' })
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <header class="topbar">
+    <RouterLink class="brand" :to="auth.user ? homeFor(auth.role) : { name: 'login' }">
+      <span class="brand-mark"></span>
+      <span class="brand-name">PRONTO</span>
+    </RouterLink>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <nav v-if="links.length" class="nav-links" aria-label="Principale">
+      <RouterLink v-for="l in links" :key="l.label" :to="l.to">{{ l.label }}</RouterLink>
+    </nav>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div class="seg-bar" role="group" aria-label="Lingua / Language">
+      <button
+        v-for="l in langs"
+        :key="l"
+        type="button"
+        :aria-pressed="lang === l"
+        @click="setLang(l)"
+      >
+        {{ l.toUpperCase() }}
+      </button>
+    </div>
+
+    <div v-if="auth.user" style="position: relative">
+      <button
+        type="button"
+        class="avatar"
+        :aria-expanded="menuOpen"
+        aria-haspopup="menu"
+        :aria-label="`${auth.user.first_name} ${auth.user.last_name}`"
+        @click="menuOpen = !menuOpen"
+      >
+        {{ auth.initials }}
+      </button>
+      <div v-if="menuOpen" class="menu" role="menu" @click="menuOpen = false">
+        <div class="menu-head">
+          <div class="heading" style="font-size: 14px">
+            {{ auth.user.first_name }} {{ auth.user.last_name }}
+          </div>
+          <div style="font-size: 11px; color: var(--color-neutral-600); word-break: break-all">
+            {{ auth.user.email }}
+          </div>
+          <div class="kicker" style="font-size: 10px; margin: 5px 0 0">{{ roleLabel }}</div>
+        </div>
+        <RouterLink v-for="l in links" :key="l.label" :to="l.to" role="menuitem">{{
+          l.label
+        }}</RouterLink>
+        <button type="button" class="signout" role="menuitem" @click="signOut">
+          {{ t('signOut') }}
+        </button>
+      </div>
     </div>
   </header>
 
-  <RouterView />
+  <main class="page">
+    <RouterView />
+  </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
