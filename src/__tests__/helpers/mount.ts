@@ -8,8 +8,14 @@
  */
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia, type Pinia } from 'pinia'
-import type { Component } from 'vue'
-import { createMemoryHistory, createRouter, type RouteLocationRaw, type Router } from 'vue-router'
+import { defineComponent, type Component } from 'vue'
+import {
+  createMemoryHistory,
+  createRouter,
+  type RouteLocationRaw,
+  type RouteRecordRaw,
+  type Router,
+} from 'vue-router'
 
 import { setToken } from '@/api/client'
 import type { User } from '@/api/types'
@@ -35,8 +41,19 @@ export function freshPinia(): Pinia {
   return pinia
 }
 
+/**
+ * The app's routes on memory history. Their lazy-loaded pages are swapped for
+ * empty placeholders: the test mounts the page it is about itself, and a
+ * navigation then completes within `flushPromises` instead of waiting for a
+ * dynamic import.
+ */
 export function memoryRouter(): Router {
-  return createRouter({ history: createMemoryHistory(), routes: appRouter.options.routes })
+  const routes = appRouter.options.routes.map((route) =>
+    'component' in route && route.component
+      ? { ...route, component: defineComponent({ name: String(route.name), render: () => null }) }
+      : route,
+  ) as RouteRecordRaw[]
+  return createRouter({ history: createMemoryHistory(), routes })
 }
 
 /** Signs `user` in on the active Pinia, as if `/me/` had already answered. */
