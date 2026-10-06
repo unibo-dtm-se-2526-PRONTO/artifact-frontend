@@ -22,6 +22,23 @@ export default mergeConfig(
         // can never reach the real backend (and its shared database).
         VITE_API_URL: 'http://api.test',
       },
+      coverage: {
+        provider: 'v8',
+        // Every source file counts, tested or not; main.ts only mounts the app
+        // and types.ts holds no code.
+        include: ['src/**/*.{ts,vue}'],
+        exclude: ['src/main.ts', 'src/api/types.ts', 'src/**/__tests__/**'],
+        reporter: [['text', { skipFull: false }], 'text-summary', 'html'],
+        reportsDirectory: 'coverage',
+        // A few points under what the suite reaches, so a real regression
+        // fails CI but an unrelated refactor does not.
+        thresholds: {
+          lines: 95,
+          statements: 95,
+          functions: 95,
+          branches: 90,
+        },
+      },
     },
   }),
 )
