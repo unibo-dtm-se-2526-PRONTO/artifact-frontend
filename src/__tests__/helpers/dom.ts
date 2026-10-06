@@ -70,3 +70,13 @@ export async function click(el: Element_) {
   await el.trigger('click')
   await flushPromises()
 }
+
+/** The text of each innermost element, in order: what a row shows, piece by piece. */
+export function texts(root: Root): string[] {
+  return root
+    .findAll('*')
+    .map((w) => w.element)
+    .filter((el) => el.children.length === 0)
+    .map(text)
+    .filter(Boolean)
+}
