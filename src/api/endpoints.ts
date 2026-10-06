@@ -51,8 +51,8 @@ export const removeShift = (id: number) =>
   apiFetch<void>(`/api/shifts/${id}/`, { method: 'DELETE' })
 
 // — FAQ —
-export const askQuestion = (office: OfficeCode, question: string) =>
-  apiFetch<Inquiry>(`/api/questions/?lang=${lang.value}`, json({ office, question }))
+export const askQuestion = (question: string) =>
+  apiFetch<Inquiry>(`/api/questions/?lang=${lang.value}`, json({ question }))
 export const resolveQuestion = (id: string) =>
   apiFetch<Inquiry>(`/api/questions/${id}/resolve/`, { method: 'POST' })
 export const countFaqs = () =>

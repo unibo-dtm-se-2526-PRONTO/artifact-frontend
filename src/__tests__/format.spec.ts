@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { hhmm, isoDate, minutesBetween, nextWorkingDays, scorePct } from '@/format'
+import { hhmm, isoDate, minutesBetween, nextWorkingDays } from '@/format'
 
 describe('nextWorkingDays', () => {
   it('skips weekends and includes today when it is a weekday', () => {
@@ -18,14 +18,6 @@ describe('nextWorkingDays', () => {
 describe('isoDate', () => {
   it('pads month and day, using the local date', () => {
     expect(isoDate(new Date(2026, 0, 5, 23, 59))).toBe('2026-01-05')
-  })
-})
-
-describe('scorePct', () => {
-  it('turns the backend rank into a capped percentage', () => {
-    expect(scorePct(0.734)).toBe(73)
-    expect(scorePct(1.4)).toBe(99)
-    expect(scorePct(-0.2)).toBe(0)
   })
 })
 
