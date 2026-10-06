@@ -41,14 +41,6 @@ export function hhmm(t: string): string {
   return t.slice(0, 5)
 }
 
-/**
- * Il punteggio di pertinenza del backend (rank full-text, normalizzato sulla
- * lunghezza della domanda) come percentuale da mostrare, tra 0 e 99.
- */
-export function scorePct(score: number): number {
-  return Math.max(0, Math.min(99, Math.round(score * 100)))
-}
-
 /** Minuti tra due orari "HH:MM[:SS]". */
 export function minutesBetween(start: string, end: string): number {
   const toMin = (t: string) => {

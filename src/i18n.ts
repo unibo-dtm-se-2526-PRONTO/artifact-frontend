@@ -81,25 +81,19 @@ const it = {
   homeT: 'Qual è la tua domanda?',
   homeSub:
     'Scrivila come la diresti al telefono. Cerchiamo prima nell’archivio delle domande già ricevute; se non basta, prenoti un appuntamento con l’ufficio giusto.',
-  officeK: 'Ufficio',
   search: 'Es. Non riesco a recuperare la password del SOL…',
   ask: 'Cerca',
-  answerK: 'Risposta trovata',
   answerNoneK: 'Nessuna risposta in archivio',
-  engine: 'ricerca testuale · PostgreSQL full-text',
   reassigned: 'La risposta è di un altro ufficio: {office}.',
   satK: 'Questa risposta ti soddisfa?',
   answerOk: 'Sì, risolto',
   answerNo: 'No, voglio un appuntamento',
   noAnswer:
     'Nessuna risposta in archivio è abbastanza pertinente. Serve un appuntamento con l’ufficio competente.',
-  bookWith: 'Prenota con {office}',
+  pickOfficeK: 'Scegli l’ufficio con cui prenotare',
   solvedNote:
     'Chiuso senza appuntamento. La domanda resta nell’archivio: contribuisce a migliorare le risposte future.',
   askAgain: 'Fai un’altra domanda',
-  browseK: 'Oppure sfoglia gli uffici',
-  browseShow: 'Mostra',
-  browseHide: 'Nascondi',
   book: 'Prenota',
   slotMinutes: 'slot da {n} min',
 
@@ -219,25 +213,19 @@ const en: Messages = {
   homeT: 'What is your question?',
   homeSub:
     'Write it as you would say it on the phone. We search the archive of questions already received first; if that is not enough, you book an appointment with the right office.',
-  officeK: 'Office',
   search: 'E.g. I can’t recover my SOL password…',
   ask: 'Search',
-  answerK: 'Answer found',
   answerNoneK: 'No archived answer',
-  engine: 'text search · PostgreSQL full-text',
   reassigned: 'The answer belongs to another office: {office}.',
   satK: 'Does this answer satisfy you?',
   answerOk: 'Yes, solved',
   answerNo: 'No, I want an appointment',
   noAnswer:
     'No archived answer is relevant enough. This needs an appointment with the relevant office.',
-  bookWith: 'Book with {office}',
+  pickOfficeK: 'Choose the office to book with',
   solvedNote:
     'Closed without an appointment. The question stays in the archive and helps improve future answers.',
   askAgain: 'Ask another question',
-  browseK: 'Or browse the offices',
-  browseShow: 'Show',
-  browseHide: 'Hide',
   book: 'Book',
   slotMinutes: '{n}-min slots',
 

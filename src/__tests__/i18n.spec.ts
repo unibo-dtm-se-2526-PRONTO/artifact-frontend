@@ -7,7 +7,9 @@ describe('i18n', () => {
 
   it('fills placeholders', () => {
     setLang('it')
-    expect(t('bookWith', { office: 'Tirocini' })).toBe('Prenota con Tirocini')
+    expect(t('reassigned', { office: 'Tirocini' })).toBe(
+      'La risposta è di un altro ufficio: Tirocini.',
+    )
   })
 
   it('switches language', () => {
