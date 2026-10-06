@@ -25,6 +25,8 @@ export interface MountOptions {
   route?: RouteLocationRaw
   /** Called with the fresh Pinia before mounting, to seed stores. */
   setup?: (pinia: Pinia) => void
+  /** Components to replace with stubs, e.g. `{ RouterView: true }`. */
+  stubs?: Record<string, boolean | Component>
 }
 
 export function freshPinia(): Pinia {
@@ -54,7 +56,7 @@ export async function mountWithPlugins(component: Component, options: MountOptio
   await router.push(options.route ?? '/')
   await router.isReady()
 
-  const wrapper = mount(component, { global: { plugins: [pinia, router] } })
+  const wrapper = mount(component, { global: { plugins: [pinia, router], stubs: options.stubs } })
   await flushPromises()
   return { wrapper, router, pinia }
 }

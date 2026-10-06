@@ -4,7 +4,9 @@
  */
 import { flushPromises, type DOMWrapper, type VueWrapper } from '@vue/test-utils'
 
-type Root = VueWrapper | DOMWrapper<Element>
+/** A mounted component or an element in it, as `find` or `get` returned it. */
+type Element_ = Omit<DOMWrapper<Element>, 'exists'>
+type Root = VueWrapper | Element_
 
 const text = (el: Element) => (el.textContent ?? '').replace(/\s+/g, ' ').trim()
 
@@ -64,7 +66,7 @@ export async function submit(root: Root, selector = 'form') {
 }
 
 /** Clicks and waits for the requests and navigation the click starts. */
-export async function click(el: DOMWrapper<Element>) {
+export async function click(el: Element_) {
   await el.trigger('click')
   await flushPromises()
 }
