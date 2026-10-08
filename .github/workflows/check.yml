@@ -30,8 +30,17 @@ jobs:
       - name: Type check
         run: npm run type-check
 
-      - name: Unit tests
-        run: npm run test:unit -- --run
+      # The whole suite, measured: fails below the thresholds in vitest.config.ts.
+      - name: Unit tests with coverage
+        run: npm run test:coverage
+
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: coverage-report-${{ github.sha }}
+          path: coverage
+          if-no-files-found: ignore
+          overwrite: true
 
   test:
     needs: check
