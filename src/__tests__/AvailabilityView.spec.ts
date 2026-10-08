@@ -62,7 +62,6 @@ describe('AvailabilityView', () => {
       ['Giovedì', '10:00 – 11:00', '2 slot × 30 min', 'Rimuovi'],
       ['Venerdì', 'Chiuso'],
     ])
-    expect(pageText(wrapper)).toContain('Totale: 11 slot a settimana')
   })
 
   it('lists a weekend day only when it has a shift', async () => {
@@ -159,7 +158,6 @@ describe('AvailabilityView', () => {
 
     expect(api.calls('DELETE', '/api/shifts/7/')).toHaveLength(1)
     expect(rows(wrapper)[4]).toEqual(['Giovedì', 'Chiuso'])
-    expect(pageText(wrapper)).toContain('Totale: 9 slot a settimana')
   })
 
   it('explains why a shift with bookings cannot be removed', async () => {

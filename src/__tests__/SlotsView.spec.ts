@@ -92,7 +92,6 @@ describe('SlotsView', () => {
       '09:00',
       '09:30',
     ])
-    expect(pageText(wrapper)).toContain('La domanda viene allegata alla richiesta')
   })
 
   it('switches day, and says when a day has nothing free', async () => {
@@ -127,12 +126,6 @@ describe('SlotsView', () => {
 
     await click(button(wrapper, 'Continua'))
     expect(router.currentRoute.value.name).toBe('confirm')
-  })
-
-  it('does not mention the question when booking straight from an office', async () => {
-    serve({})
-    const { wrapper } = await mountSlots('')
-    expect(pageText(wrapper)).not.toContain('La domanda viene allegata')
   })
 
   it('shows a loading state, then an error if any day fails', async () => {

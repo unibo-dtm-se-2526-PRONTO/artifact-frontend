@@ -167,13 +167,11 @@ describe('endpoints', () => {
     it('askQuestion posts the question, tagged with the interface language', async () => {
       mock.on('POST', '/api/questions/', { status: 201, body: fx.inquiry() })
 
-      await expect(api.askQuestion('ADMIN_OFFICE', 'Come attivo un tirocinio?')).resolves.toEqual(
-        fx.inquiry(),
-      )
+      await expect(api.askQuestion('Come attivo un tirocinio?')).resolves.toEqual(fx.inquiry())
       expect(sent()).toEqual({
         method: 'POST',
         url: '/api/questions/?lang=it',
-        body: { office: 'ADMIN_OFFICE', question: 'Come attivo un tirocinio?' },
+        body: { question: 'Come attivo un tirocinio?' },
       })
     })
 
