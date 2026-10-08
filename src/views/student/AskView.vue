@@ -79,8 +79,7 @@ const officeNumber = (i: number) => String(i + 1).padStart(2, '0')
   <div class="screen" data-screen-label="Chiedi">
     <div>
       <div class="kicker">{{ t('homeK') }}</div>
-      <h2 style="margin: 0 0 6px">{{ t('homeT') }}</h2>
-      <p class="lead">{{ t('homeSub') }}</p>
+      <h2 style="margin: 0">{{ t('homeT') }}</h2>
     </div>
 
     <form class="searchbar" @submit.prevent="ask">

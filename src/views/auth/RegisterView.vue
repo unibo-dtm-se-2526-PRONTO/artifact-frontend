@@ -62,8 +62,7 @@ async function submit() {
     <form class="split-form" @submit.prevent="submit">
       <div>
         <div class="kicker">{{ t('sub') }}</div>
-        <h2 style="margin: 0 0 6px; font-size: 30px">{{ t('regTitle') }}</h2>
-        <p class="lead">{{ t('regSub') }}</p>
+        <h2 style="margin: 0; font-size: 30px">{{ t('regTitle') }}</h2>
       </div>
       <div v-if="error" class="error" role="alert">{{ error }}</div>
       <div class="grid-2">

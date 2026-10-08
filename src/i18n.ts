@@ -50,14 +50,10 @@ const it = {
   // auth
   sub: 'Sportello digitale · Campus di Cesena',
   inTitle: 'Accedi a PRONTO',
-  inSub: 'Con le credenziali che hai scelto in registrazione.',
+  inSub: 'Con le tue credenziali di ateneo.',
   inCta: 'Accedi',
   noAccount: 'Non hai un account?',
-  inNote:
-    'Il dominio dell’email decide il ruolo: @studio.unibo.it entra come studente, @unibo.it come dipendente.',
   regTitle: 'Crea il tuo account',
-  regSub:
-    'L’indirizzo istituzionale verifica automaticamente il ruolo: @studio.unibo.it per gli studenti, @unibo.it per i dipendenti.',
   fn: 'Nome',
   ln: 'Cognome',
   mat: 'Matricola',
@@ -79,8 +75,6 @@ const it = {
   // ask
   homeK: 'Chiedi',
   homeT: 'Qual è la tua domanda?',
-  homeSub:
-    'Scrivila come la diresti al telefono. Cerchiamo prima nell’archivio delle domande già ricevute; se non basta, prenoti un appuntamento con l’ufficio giusto.',
   search: 'Es. Non riesco a recuperare la password del SOL…',
   ask: 'Cerca',
   answerNoneK: 'Nessuna risposta in archivio',
@@ -99,23 +93,17 @@ const it = {
 
   // slots
   slotsT: 'Scegli giorno e orario',
-  routedNote: 'La domanda viene allegata alla richiesta: non devi riscriverla.',
   noSlotsDay: 'Nessuno slot libero in questo giorno.',
   free: 'libero',
   freeN: '{n} liberi',
   selK: 'Slot selezionato',
   noSlot: 'Nessuno slot',
-  whoK: 'Assegnazione',
-  whoNote:
-    'La distribuzione equa assegna la richiesta al dipendente dell’ufficio con meno appuntamenti attivi.',
   next: 'Continua',
 
   // confirm
   qT: 'Rivedi e conferma',
-  qSub: 'La domanda serve al dipendente per prepararsi.',
   qLabel: 'La tua domanda',
   qPh: 'Scrivi qui la tua domanda…',
-  privacy: 'Il testo è visibile solo all’ufficio competente.',
   shownFaq: 'Risposta già proposta',
   shownFaqNote: 'Il dipendente vedrà anche la FAQ che ti è stata proposta.',
   confirmBtn: 'Conferma prenotazione',
@@ -148,8 +136,6 @@ const it = {
   filterUpcoming: 'Prossimi',
   filterAll: 'Tutti',
   availT: 'Turni e disponibilità',
-  availNote:
-    'Gli slot sono calcolati dai turni alla durata dell’ufficio. Un turno con appuntamenti prenotati non può essere rimosso.',
   closed: 'Chiuso',
   addShift: 'Aggiungi turno',
   remove: 'Rimuovi',
@@ -157,10 +143,8 @@ const it = {
   start: 'Inizio',
   end: 'Fine',
   save: 'Salva',
-  genTotal: 'Totale: {n} slot a settimana',
   needOffice: 'Prima scegli il tuo ufficio nel profilo.',
   empT: 'Il mio profilo',
-  empSub: 'L’ufficio si sceglie una volta sola: per cambiarlo serve un amministratore.',
   officeSet: 'Ufficio assegnato',
   setOffice: 'Salva ufficio',
   days: ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'],
@@ -184,14 +168,10 @@ const en: Messages = {
 
   sub: 'Digital front desk · Cesena Campus',
   inTitle: 'Sign in to PRONTO',
-  inSub: 'With the credentials you set at registration.',
+  inSub: 'With your university credentials.',
   inCta: 'Sign in',
   noAccount: 'No account yet?',
-  inNote:
-    'The email domain decides the role: @studio.unibo.it signs in as a student, @unibo.it as staff.',
   regTitle: 'Create your account',
-  regSub:
-    'Your institutional address sets the role automatically: @studio.unibo.it for students, @unibo.it for staff.',
   fn: 'First name',
   ln: 'Last name',
   mat: 'Student ID',
@@ -211,8 +191,6 @@ const en: Messages = {
 
   homeK: 'Ask',
   homeT: 'What is your question?',
-  homeSub:
-    'Write it as you would say it on the phone. We search the archive of questions already received first; if that is not enough, you book an appointment with the right office.',
   search: 'E.g. I can’t recover my SOL password…',
   ask: 'Search',
   answerNoneK: 'No archived answer',
@@ -230,22 +208,16 @@ const en: Messages = {
   slotMinutes: '{n}-min slots',
 
   slotsT: 'Pick a day and a time',
-  routedNote: 'Your question is attached to the request: no need to retype it.',
   noSlotsDay: 'No free slots on this day.',
   free: 'free',
   freeN: '{n} free',
   selK: 'Selected slot',
   noSlot: 'No slot',
-  whoK: 'Assignment',
-  whoNote:
-    'Fair distribution assigns the request to the office member with the fewest active appointments.',
   next: 'Continue',
 
   qT: 'Review and confirm',
-  qSub: 'Your question lets the officer prepare.',
   qLabel: 'Your question',
   qPh: 'Type your question…',
-  privacy: 'Only the relevant office can read this text.',
   shownFaq: 'Answer already suggested',
   shownFaqNote: 'The officer will also see the FAQ you were shown.',
   confirmBtn: 'Confirm booking',
@@ -276,8 +248,6 @@ const en: Messages = {
   filterUpcoming: 'Upcoming',
   filterAll: 'All',
   availT: 'Shifts and availability',
-  availNote:
-    'Slots are computed from shifts at the office’s slot length. A shift with booked appointments cannot be removed.',
   closed: 'Closed',
   addShift: 'Add shift',
   remove: 'Remove',
@@ -285,10 +255,8 @@ const en: Messages = {
   start: 'Start',
   end: 'End',
   save: 'Save',
-  genTotal: 'Total: {n} slots per week',
   needOffice: 'Choose your office in your profile first.',
   empT: 'My profile',
-  empSub: 'The office is chosen once: changing it needs an administrator.',
   officeSet: 'Assigned office',
   setOffice: 'Save office',
   days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],

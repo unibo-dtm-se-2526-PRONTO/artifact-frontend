@@ -93,8 +93,7 @@ function toBookings() {
     </button>
     <div>
       <div class="kicker">{{ offices.nameOf(booking.office) }} · {{ longSlot(booking.slot) }}</div>
-      <h3 style="margin: 0 0 6px">{{ t('qT') }}</h3>
-      <p class="lead">{{ t('qSub') }}</p>
+      <h3 style="margin: 0">{{ t('qT') }}</h3>
     </div>
     <hr class="hr" style="margin: 0" />
     <div v-if="error" class="error" role="alert">{{ error }}</div>
@@ -114,14 +113,13 @@ function toBookings() {
         <div
           class="row"
           style="
-            justify-content: space-between;
+            justify-content: flex-end;
             font-size: 11px;
             color: var(--color-neutral-600);
             margin-top: 6px;
           "
         >
-          <span>{{ t('privacy') }}</span
-          ><span>{{ booking.question.length }}/1000</span>
+          <span>{{ booking.question.length }}/1000</span>
         </div>
         <button
           type="submit"

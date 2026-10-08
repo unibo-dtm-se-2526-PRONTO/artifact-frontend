@@ -59,10 +59,7 @@ function next() {
     </button>
     <div>
       <div class="kicker">{{ offices.nameOf(booking.office) }}</div>
-      <h3 style="margin: 0 0 6px">{{ t('slotsT') }}</h3>
-      <p v-if="booking.question" class="small" style="margin: 0; max-width: 60ch">
-        {{ t('routedNote') }}
-      </p>
+      <h3 style="margin: 0">{{ t('slotsT') }}</h3>
     </div>
     <hr class="hr" style="margin: 0" />
 
@@ -113,10 +110,6 @@ function next() {
             {{ booking.slot ? longSlot(booking.slot) : t('noSlot') }}
           </div>
           <div class="small" style="margin-top: 2px">{{ offices.nameOf(booking.office) }}</div>
-        </div>
-        <div>
-          <div class="label" style="margin-bottom: 6px">{{ t('whoK') }}</div>
-          <p class="small" style="margin: 0; font-size: 11.5px">{{ t('whoNote') }}</p>
         </div>
         <div>
           <button
