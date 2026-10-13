@@ -35,6 +35,7 @@ const roleLabel = computed(() =>
 )
 
 const langs: Lang[] = ['it', 'en']
+const appVersion = __APP_VERSION__
 
 async function signOut() {
   menuOpen.value = false
@@ -46,7 +47,11 @@ async function signOut() {
 
 <template>
   <header class="topbar">
-    <RouterLink class="brand" :to="auth.user ? homeFor(auth.role) : { name: 'login' }">
+    <RouterLink
+      class="brand"
+      :to="auth.user ? homeFor(auth.role) : { name: 'login' }"
+      :title="`PRONTO v${appVersion}`"
+    >
       <span class="brand-mark"></span>
       <span class="brand-name">PRONTO</span>
     </RouterLink>
@@ -87,6 +92,9 @@ async function signOut() {
             {{ auth.user.email }}
           </div>
           <div class="kicker" style="font-size: 10px; margin: 5px 0 0">{{ roleLabel }}</div>
+          <div style="font-size: 10px; color: var(--color-neutral-600); margin-top: 3px">
+            v{{ appVersion }}
+          </div>
         </div>
         <RouterLink v-for="l in links" :key="l.label" :to="l.to" role="menuitem">{{
           l.label
