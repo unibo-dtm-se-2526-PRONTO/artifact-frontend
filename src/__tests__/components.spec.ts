@@ -51,7 +51,7 @@ describe('PosterPanel', () => {
     await flushPromises()
 
     expect(stats(wrapper)).toEqual(['4 uffici del Campus di Cesena'])
-    expect(wrapper.get('h1').text()).toBe('Meno telefonate.Più risposte.')
+    expect(wrapper.get('h1').text()).toBe('Le tue risposte.A portata di click.')
   })
 
   it('leaves the count out when the archive is empty', async () => {
