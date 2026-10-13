@@ -44,7 +44,7 @@ describe('RegisterView', () => {
     expect(field(wrapper, 'Corso di laurea').exists()).toBe(true)
   })
 
-  it('registers a student, trimming the fields, then asks to verify and sign in', async () => {
+  it('registers a student, trimming the fields, then sends them to sign in', async () => {
     api.on('POST', '/api/auth/register/', { status: 201, body: fx.studentUser() })
     const { wrapper, router } = await mountRegister()
 

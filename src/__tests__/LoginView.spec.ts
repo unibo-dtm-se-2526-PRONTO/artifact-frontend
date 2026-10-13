@@ -36,7 +36,8 @@ describe('LoginView', () => {
 
   it('welcomes back a user who just registered', async () => {
     const { wrapper } = await mountWithPlugins(LoginView, { route: '/login?registered=1' })
-    expect(pageText(wrapper)).toContain('Account creato.')
+    expect(pageText(wrapper)).toContain('Account creato. Puoi accedere subito')
+    expect(pageText(wrapper)).not.toContain('verifica')
   })
 
   it('signs a student in and opens the ask page', async () => {
@@ -82,11 +83,12 @@ describe('LoginView', () => {
     expect(button(wrapper, 'Accedi').attributes('disabled')).toBeUndefined()
   })
 
-  it('gives an unverified account the same generic message', async () => {
-    // The backend does not reveal whether the account exists but is inactive.
+  it('gives a deactivated account the same generic message', async () => {
+    // An administrator can deactivate an account; the backend then refuses its
+    // login exactly as a wrong password, without revealing that it exists.
     api.on('POST', '/api/auth/login/', INVALID)
 
-    const { wrapper } = await signIn('nuovo.utente@studio.unibo.it', 'giusta-ma-non-verificato')
+    const { wrapper } = await signIn('nuovo.utente@studio.unibo.it', 'giusta-ma-disattivato')
 
     expect(alertText(wrapper)).toBe('Invalid email or password.')
   })
