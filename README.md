@@ -131,9 +131,10 @@ GitHub release, the new version in `package.json` and an entry in
 `CHANGELOG.md`, committed back as `chore(release): …`. Nothing is published to
 npm.
 
-The workflow needs one secret, `RELEASE_TOKEN`, a GitHub token allowed to push
-to the repository: tag, GitHub release and release commit all come from the
-account that owns it. Commit messages are checked on every pull request
+The workflow pushes with the token GitHub Actions generates for every run, so
+tag and GitHub release come from `github-actions[bot]` and the release commit
+from `semantic-release-bot`; it needs no secret. Commit messages are checked
+on every pull request
 (`.github/workflows/commitlint.yml`, rules in `commitlint.config.mjs`).
 
 The version is compiled into the app as `__APP_VERSION__` (`vite.config.ts`)
