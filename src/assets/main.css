@@ -297,12 +297,6 @@ button {
   max-width: 760px;
   border: 2px solid var(--color-text);
 }
-.searchbar select.input {
-  width: auto;
-  max-width: 40%;
-  border: 0;
-  border-right: 1px solid var(--color-divider);
-}
 .searchbar input.input {
   flex: 1;
   border: 0;
@@ -312,17 +306,6 @@ button {
 .searchbar .btn {
   border: 0;
   padding: 0 18px;
-}
-@media (max-width: 640px) {
-  .searchbar {
-    flex-wrap: wrap;
-  }
-  .searchbar select.input {
-    max-width: none;
-    width: 100%;
-    border-right: 0;
-    border-bottom: 1px solid var(--color-divider);
-  }
 }
 .result {
   display: flex;
@@ -367,19 +350,6 @@ button {
 }
 .box-accent {
   border-color: var(--color-accent);
-}
-.pct {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 12px;
-  padding: 3px 7px;
-  white-space: nowrap;
-  background: var(--color-accent-200);
-  color: var(--color-accent-800);
-}
-.pct-high {
-  background: var(--color-accent);
-  color: var(--color-bg);
 }
 
 .office-grid {

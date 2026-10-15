@@ -60,7 +60,8 @@ export interface SuggestedFaq {
 
 export interface Inquiry {
   id: string
-  office: OfficeCode
+  /** L'ufficio della risposta trovata; `null` se non ce n'è una. */
+  office: OfficeCode | null
   language: 'it' | 'en'
   match: { faq: SuggestedFaq; office: OfficeCode; score: number } | null
   office_reassigned: boolean

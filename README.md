@@ -120,3 +120,22 @@ Shared helpers are in `src/__tests__/helpers/`:
 **90%** of branches. CI runs it in the `check` job and uploads the HTML report
 as the `coverage-report-<sha>` artifact.
 
+## Releases
+
+`.github/workflows/deploy.yml` runs [semantic-release](https://semantic-release.gitbook.io)
+after CI, on `main` only. It reads the commit messages, which therefore follow
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): `feat`
+makes a minor release, `fix` and `docs` a patch, a `!` a major one, while
+`chore`, `ci`, `test` and `refactor` make none. A release is a git tag, a
+GitHub release, the new version in `package.json` and an entry in
+`CHANGELOG.md`, committed back as `chore(release): …`. Nothing is published to
+npm.
+
+The workflow pushes with the token GitHub Actions generates for every run, so
+tag and GitHub release come from `github-actions[bot]` and the release commit
+from `semantic-release-bot`; it needs no secret. Commit messages are checked
+on every pull request
+(`.github/workflows/commitlint.yml`, rules in `commitlint.config.mjs`).
+
+The version is compiled into the app as `__APP_VERSION__` (`vite.config.ts`)
+and shown in the user menu and in the tooltip of the logo.

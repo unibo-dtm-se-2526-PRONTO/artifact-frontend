@@ -50,7 +50,6 @@ const week = computed(() => {
 })
 
 const slotsOf = (s: Shift) => Math.floor(minutesBetween(s.start_time, s.end_time) / step.value)
-const total = computed(() => shifts.value.reduce((n, s) => n + slotsOf(s), 0))
 
 /** FR4/FR5: dichiarare un turno; il backend controlla griglia e sovrapposizioni. */
 async function submit() {
@@ -155,10 +154,7 @@ async function remove(s: Shift) {
           />
         </div>
         <button type="submit" class="btn btn-secondary">+ {{ t('addShift') }}</button>
-        <span class="small">{{ t('genTotal', { n: total }) }}</span>
       </form>
-
-      <div class="note">{{ t('availNote') }}</div>
     </template>
   </div>
 </template>

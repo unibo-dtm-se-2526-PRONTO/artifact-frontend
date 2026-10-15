@@ -43,8 +43,7 @@ async function save() {
   <div class="screen" style="max-width: 640px" data-screen-label="Profilo dipendente">
     <div>
       <div class="kicker">{{ t('roleEmployee') }}</div>
-      <h3 style="margin: 0 0 6px">{{ t('empT') }}</h3>
-      <p class="lead">{{ t('empSub') }}</p>
+      <h3 style="margin: 0">{{ t('empT') }}</h3>
     </div>
     <hr class="hr" style="margin: 0" />
     <div v-if="error" class="error" role="alert">{{ error }}</div>

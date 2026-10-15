@@ -47,7 +47,7 @@ describe('a student', () => {
     api.on('GET', '/api/auth/me/', { body: fx.studentUser() })
     api.on('POST', '/api/questions/?lang=it', {
       status: 201,
-      body: fx.inquiry({ office: 'GUIDANCE', match: null }),
+      body: fx.inquiry({ office: null, match: null }),
     })
     api.on('GET', /^\/api\/offices\/GUIDANCE\/availability\//, (request) => ({
       body: fx.availability(
@@ -78,7 +78,7 @@ describe('a student', () => {
     await arrive(router, 'ask')
     await fill(wrapper, 'Qual è la tua domanda?', 'Come scelgo la magistrale?')
     await submit(wrapper, 'form.searchbar')
-    await click(button(wrapper, 'Prenota con Orientamento'))
+    await click(button(wrapper, 'Orientamento'))
 
     await arrive(router, 'slots')
     await click(button(wrapper, '09:30'))

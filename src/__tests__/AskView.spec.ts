@@ -35,28 +35,20 @@ beforeEach(() => {
 
 const mountAsk = () => mountWithPlugins(AskView, { user: fx.studentUser(), route: '/ask' })
 
-async function ask(answer: MockResponse, office?: string) {
+async function ask(answer: MockResponse) {
   api.on('POST', ASK, answer)
   const mounted = await mountAsk()
-  if (office) await field(mounted.wrapper, 'Ufficio').setValue(office)
   await fill(mounted.wrapper, 'Qual è la tua domanda?', `  ${QUESTION} `)
   await submit(mounted.wrapper)
   return mounted
 }
 
 describe('AskView', () => {
-  it('loads the offices and preselects the first', async () => {
+  it('loads the offices with the student’s token, without asking to choose one', async () => {
     const { wrapper } = await mountAsk()
 
-    const select = field<HTMLSelectElement>(wrapper, 'Ufficio')
-    expect(select.findAll('option').map((o) => o.text())).toEqual([
-      'Orientamento',
-      'Segreteria studenti',
-      'Relazioni internazionali',
-      'Tirocini',
-    ])
-    expect(select.element.value).toBe('GUIDANCE')
     expect(api.last('GET', '/api/offices/')?.headers.Authorization).toBe(`Token ${fx.TOKEN}`)
+    expect(wrapper.findAll('select')).toHaveLength(0)
   })
 
   it('cannot search until something is typed', async () => {
@@ -77,22 +69,23 @@ describe('AskView', () => {
   })
 
   describe('with a matching FAQ', () => {
-    it('asks the chosen office and shows the answer with its score', async () => {
-      const { wrapper } = await ask({ status: 201, body: fx.inquiry() }, 'INTERNSHIPS')
+    it('asks every office and shows only the answer, with its office', async () => {
+      const { wrapper } = await ask({ status: 201, body: fx.inquiry() })
 
-      expect(api.last('POST', ASK)?.body).toEqual({ office: 'INTERNSHIPS', question: QUESTION })
+      expect(api.last('POST', ASK)?.body).toEqual({ question: QUESTION })
       const text = pageText(wrapper)
-      expect(text).toContain('Risposta trovata')
-      expect(text).toContain('61%')
-      expect(text).toContain(fx.faq().question)
+      expect(text).toContain('Tirocini')
       expect(text).toContain(fx.faq().answer)
       expect(text).toContain('Questa risposta ti soddisfa?')
+      // the FAQ's own question and the score are internals of the search
+      expect(text).not.toContain(fx.faq().question)
+      expect(text).not.toContain('61%')
       expect(text).not.toContain('La risposta è di un altro ufficio')
     })
 
     it('flags an answer that belongs to another office', async () => {
       const reassigned = fx.inquiry({ office: 'ADMIN_OFFICE', office_reassigned: true })
-      const { wrapper } = await ask({ status: 201, body: reassigned }, 'ADMIN_OFFICE')
+      const { wrapper } = await ask({ status: 201, body: reassigned })
 
       expect(pageText(wrapper)).toContain('La risposta è di un altro ufficio: Tirocini.')
     })
@@ -110,7 +103,7 @@ describe('AskView', () => {
 
       await click(button(wrapper, 'Fai un’altra domanda'))
 
-      expect(pageText(wrapper)).not.toContain('Risposta trovata')
+      expect(pageText(wrapper)).not.toContain('Questa risposta ti soddisfa?')
       expect(field<HTMLInputElement>(wrapper, 'Qual è la tua domanda?').element.value).toBe('')
     })
 
@@ -132,7 +125,7 @@ describe('AskView', () => {
 
     it('books with the answer’s office, carrying the question and the FAQ', async () => {
       const reassigned = fx.inquiry({ office: 'ADMIN_OFFICE', office_reassigned: true })
-      const { wrapper, router } = await ask({ status: 201, body: reassigned }, 'ADMIN_OFFICE')
+      const { wrapper, router } = await ask({ status: 201, body: reassigned })
 
       await click(button(wrapper, 'No, voglio un appuntamento'))
 
@@ -145,12 +138,15 @@ describe('AskView', () => {
   })
 
   describe('without a matching FAQ', () => {
-    it('offers to book with the office asked', async () => {
-      const none = fx.inquiry({ office: 'GUIDANCE', match: null })
-      const { wrapper, router } = await ask({ status: 201, body: none }, 'GUIDANCE')
+    it('lets the student choose the office to book with', async () => {
+      const none = fx.inquiry({ office: null, match: null })
+      const { wrapper, router } = await ask({ status: 201, body: none })
 
-      expect(pageText(wrapper)).toContain('Nessuna risposta in archivio')
-      await click(button(wrapper, 'Prenota con Orientamento'))
+      const text = pageText(wrapper)
+      expect(text).toContain('Nessuna risposta in archivio')
+      expect(text).toContain('Scegli l’ufficio con cui prenotare')
+      expect(text).toContain('slot da 30 min')
+      await click(button(wrapper, 'Orientamento'))
 
       const booking = useBookingStore()
       expect(booking.office).toBe('GUIDANCE')
@@ -184,31 +180,6 @@ describe('AskView', () => {
     pending.resolve({ status: 201, body: fx.inquiry() })
     await flushPromises()
     expect(button(wrapper, 'Cerca').attributes('disabled')).toBeUndefined()
-    expect(pageText(wrapper)).toContain('Risposta trovata')
-  })
-
-  describe('browsing the offices', () => {
-    it('lists them on request and books one without a question', async () => {
-      const { wrapper, router } = await mountAsk()
-      const toggle = button(wrapper, 'Mostra')
-      expect(toggle.attributes('aria-expanded')).toBe('false')
-
-      await click(toggle)
-
-      expect(button(wrapper, 'Nascondi').attributes('aria-expanded')).toBe('true')
-      expect(pageText(wrapper)).toContain('slot da 30 min')
-      await click(button(wrapper, 'Relazioni internazionali'))
-
-      expect(useBookingStore().office).toBe('INTERNATIONAL')
-      expect(useBookingStore().question).toBe('')
-      expect(router.currentRoute.value.name).toBe('slots')
-    })
-
-    it('hides them again', async () => {
-      const { wrapper } = await mountAsk()
-      await click(button(wrapper, 'Mostra'))
-      await click(button(wrapper, 'Nascondi'))
-      expect(queryButtons(wrapper, 'Relazioni internazionali')).toHaveLength(0)
-    })
+    expect(pageText(wrapper)).toContain('Questa risposta ti soddisfa?')
   })
 })

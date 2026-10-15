@@ -5,6 +5,9 @@ on:
 permissions:
   contents: write
   packages: write
+  # semantic-release comments on the issues and pull requests a release ships
+  issues: write
+  pull-requests: write
 jobs:
   release:
     name: Release
@@ -41,5 +44,9 @@ jobs:
           npm install
           npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          # The token Actions generates for every run, so no personal token can
+          # expire: tag and GitHub release come from github-actions[bot], the
+          # release commit from semantic-release-bot. Its pushes start no
+          # other workflow, which the release commit skips anyway ([skip ci]).
+          GITHUB_TOKEN: ${{ github.token }}
           RELEASE_DRY_RUN: ${{ steps.skip_release.outputs.skip == 'true' || (github.ref_name != 'master' && github.ref_name != 'main') }}

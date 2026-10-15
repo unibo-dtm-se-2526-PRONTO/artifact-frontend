@@ -74,7 +74,6 @@ async function submit() {
           t('create')
         }}</RouterLink>
       </div>
-      <div class="note">{{ t('inNote') }}</div>
     </form>
     <PosterPanel />
   </div>
