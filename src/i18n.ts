@@ -64,8 +64,7 @@ const it = {
   signin: 'Ho già un account',
   idpNote:
     'Esemplificazione per il progetto: in produzione l’accesso passerebbe dall’IdP di Ateneo (Shibboleth/SAML).',
-  regDone:
-    'Account creato. Ti abbiamo inviato un’email con il link di verifica: aprilo, poi accedi.',
+  regDone: 'Account creato. Puoi accedere subito con la tua email e la tua password.',
   posterA: 'Le tue risposte.',
   posterB: 'A portata di click.',
   statOffices: 'uffici del Campus di Cesena',
@@ -182,7 +181,7 @@ const en: Messages = {
   signin: 'I already have an account',
   idpNote:
     'Project simplification: in production sign-in would go through the university IdP (Shibboleth/SAML).',
-  regDone: 'Account created. We sent you an email with a verification link: open it, then sign in.',
+  regDone: 'Account created. You can sign in right away with your email and password.',
   posterA: 'Your answers.',
   posterB: 'Just a click away.',
   statOffices: 'Cesena Campus offices',
