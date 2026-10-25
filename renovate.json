@@ -4,6 +4,9 @@
   "automerge": true,
   "dependencyDashboard": true,
   "includeForks": true,
+  "baseBranches": [
+    "develop"
+  ],
   "packageRules": [
     {
       "description": "Updates to GitHub Actions should be tagged as 'ci'",
