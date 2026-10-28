@@ -149,11 +149,10 @@ describe('RegisterView', () => {
     expect(button(wrapper, 'Crea account').attributes('disabled')).toBeUndefined()
   })
 
-  // Doubtful behaviour: an error keyed by a field the form does not render
-  // (DRF's non_field_errors, or a student field after switching to a staff
-  // address) is stored as a field error, so the alert stays empty and the user
-  // sees nothing at all. See RegisterView.vue, submit().
-  it.fails('tells the user about an error on a field the form does not show', async () => {
+  // An error keyed by a field the form does not render (DRF's
+  // non_field_errors, or a student field after switching to a staff address)
+  // goes to the alert, or the user would see nothing at all.
+  it('tells the user about an error on a field the form does not show', async () => {
     api.on('POST', '/api/auth/register/', {
       status: 400,
       body: { non_field_errors: ['Unable to register right now.'] },

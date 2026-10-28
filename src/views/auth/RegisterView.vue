@@ -26,6 +26,13 @@ const busy = ref(false)
 // mostrare i campi giusti: matricola e corso sono richiesti agli studenti
 // e rifiutati a tutti gli altri.
 const isStudent = computed(() => form.email.trim().toLowerCase().endsWith('@studio.unibo.it'))
+const shownFields = computed(() => [
+  'first_name',
+  'last_name',
+  'email',
+  'password',
+  ...(isStudent.value ? ['matricola', 'degree_programme'] : []),
+])
 
 async function submit() {
   errors.value = {}
@@ -47,7 +54,12 @@ async function submit() {
   } catch (e) {
     if (e instanceof ApiError) {
       errors.value = e.fieldErrors
-      if (!Object.keys(errors.value).length) error.value = e.detail
+      // Un errore su un campo che il form non mostra (non_field_errors, o la
+      // matricola dopo aver messo l'email di un dipendente) va nell'avviso,
+      // altrimenti l'utente non vedrebbe niente.
+      const hidden = Object.keys(errors.value).filter((f) => !shownFields.value.includes(f))
+      if (hidden.length) error.value = hidden.map((f) => errors.value[f]).join(' ')
+      else if (!Object.keys(errors.value).length) error.value = e.detail
     } else {
       error.value = t('genericError')
     }
