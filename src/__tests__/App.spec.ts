@@ -111,10 +111,9 @@ describe('the application shell', () => {
       expect(wrapper.find('nav').exists()).toBe(false)
     })
 
-    // Known bug: App.vue signOut() awaits auth.logout(), which rethrows a failed
-    // request after clearing the session, so router.push() is never reached.
-    // The user is left on a protected page, signed out, with an unhandled error.
-    it.fails('signs out to the login even when the logout request fails', async () => {
+    // auth.logout() clears the session even when the request fails, so the
+    // user must still reach the login page, with no unhandled error.
+    it('signs out to the login even when the logout request fails', async () => {
       api.on('POST', '/api/auth/logout/', { networkError: true })
       const { wrapper, router } = await mountApp(fx.studentUser(), '/bookings')
       const errors: unknown[] = []
