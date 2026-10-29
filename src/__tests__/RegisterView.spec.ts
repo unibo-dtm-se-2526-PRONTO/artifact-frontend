@@ -9,7 +9,7 @@ import { mountWithPlugins } from './helpers/mount'
 
 let api: ApiMock
 beforeEach(() => {
-  api = mockApi().on('GET', '/api/faqs/?lang=it', { body: [] })
+  api = mockApi()
 })
 
 const mountRegister = () => mountWithPlugins(RegisterView, { route: '/register' })

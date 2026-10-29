@@ -13,7 +13,7 @@ const INVALID = { status: 400, body: { non_field_errors: ['Invalid email or pass
 
 let api: ApiMock
 beforeEach(() => {
-  api = mockApi().on('GET', '/api/faqs/?lang=it', { body: [fx.faq()] })
+  api = mockApi()
 })
 
 async function signIn(email: string, password: string, route = '/login') {

@@ -55,5 +55,3 @@ export const askQuestion = (question: string) =>
   apiFetch<Inquiry>(`/api/questions/?lang=${lang.value}`, json({ question }))
 export const resolveQuestion = (id: string) =>
   apiFetch<Inquiry>(`/api/questions/${id}/resolve/`, { method: 'POST' })
-export const countFaqs = () =>
-  apiFetch<unknown[]>(`/api/faqs/?lang=${lang.value}`).then((faqs) => faqs.length)

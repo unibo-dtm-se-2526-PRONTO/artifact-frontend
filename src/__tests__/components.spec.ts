@@ -5,9 +5,6 @@ import PosterPanel from '@/components/PosterPanel.vue'
 import StatusTag from '@/components/StatusTag.vue'
 import { setLang } from '@/i18n'
 
-import { mockApi } from './helpers/fetch'
-import * as fx from './helpers/fixtures'
-
 describe('StatusTag', () => {
   it.each([
     ['BOOKED', 'Prenotato'],
@@ -28,38 +25,10 @@ describe('StatusTag', () => {
 })
 
 describe('PosterPanel', () => {
-  /** Each figure with its caption, e.g. "2 domande nel database FAQ". */
-  const stats = (wrapper: ReturnType<typeof mount>) =>
-    wrapper.findAll('.poster-stat').map((s) => `${s.get('strong').text()} ${s.get('span').text()}`)
-
-  it('shows how many FAQs the archive holds', async () => {
-    const api = mockApi().on('GET', '/api/faqs/?lang=it', {
-      body: [fx.faq(), fx.faq({ id: 4 })],
-    })
-
+  it('shows only the headline', () => {
     const wrapper = mount(PosterPanel)
-    await flushPromises()
 
-    expect(stats(wrapper)).toEqual(['2 domande nel database FAQ', '4 uffici del Campus di Cesena'])
-    expect(api.calls('GET', '/api/faqs/')).toHaveLength(1)
-  })
-
-  it('leaves the count out when the backend does not answer', async () => {
-    mockApi().on('GET', '/api/faqs/?lang=it', { networkError: true })
-
-    const wrapper = mount(PosterPanel)
-    await flushPromises()
-
-    expect(stats(wrapper)).toEqual(['4 uffici del Campus di Cesena'])
     expect(wrapper.get('h1').text()).toBe('Le tue risposte.A portata di click.')
-  })
-
-  it('leaves the count out when the archive is empty', async () => {
-    mockApi().on('GET', '/api/faqs/?lang=it', { body: [] })
-
-    const wrapper = mount(PosterPanel)
-    await flushPromises()
-
-    expect(stats(wrapper)).toEqual(['4 uffici del Campus di Cesena'])
+    expect(wrapper.text()).toBe('Le tue risposte.A portata di click.')
   })
 })

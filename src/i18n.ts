@@ -67,9 +67,6 @@ const it = {
   regDone: 'Account creato. Puoi accedere subito con la tua email e la tua password.',
   posterA: 'Le tue risposte.',
   posterB: 'A portata di click.',
-  statOffices: 'uffici del Campus di Cesena',
-  statFaq: 'domande nel database FAQ',
-  statSlot: 'minuti per slot, configurabili per ufficio',
 
   // ask
   homeK: 'Chiedi',
@@ -184,9 +181,6 @@ const en: Messages = {
   regDone: 'Account created. You can sign in right away with your email and password.',
   posterA: 'Your answers.',
   posterB: 'Just a click away.',
-  statOffices: 'Cesena Campus offices',
-  statFaq: 'questions in the FAQ database',
-  statSlot: 'minutes per slot, set per office',
 
   homeK: 'Ask',
   homeT: 'What is your question?',
