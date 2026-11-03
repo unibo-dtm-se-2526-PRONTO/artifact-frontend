@@ -41,7 +41,7 @@ onMounted(async () => {
   }
 })
 
-/** Lunedì–venerdì sempre in elenco, anche senza turni; il weekend solo se usato. */
+/** Da lunedì a venerdì sempre in elenco, anche senza turni; il weekend solo se usato. */
 const week = computed(() => {
   const used = new Set(shifts.value.map((s) => s.weekday))
   return [0, 1, 2, 3, 4, 5, 6]

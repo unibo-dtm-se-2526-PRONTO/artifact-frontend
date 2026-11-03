@@ -1,8 +1,4 @@
-/**
- * Backend payloads, shaped by `src/api/types.ts` and filled with the values the
- * backend README documents. Each builder takes overrides for the one field a
- * test cares about.
- */
+/** Backend payloads shaped by `src/api/types.ts`; each builder takes overrides. */
 import type {
   Appointment,
   Availability,

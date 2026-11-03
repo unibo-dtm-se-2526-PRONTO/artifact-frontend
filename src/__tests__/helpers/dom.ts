@@ -1,7 +1,4 @@
-/**
- * Queries by what the user sees — label, accessible name, text, role — rather
- * than by class names or component internals.
- */
+/** Queries by what the user sees (label, accessible name, text, role). */
 import { flushPromises, type DOMWrapper, type VueWrapper } from '@vue/test-utils'
 
 /** A mounted component or an element in it, as `find` or `get` returned it. */

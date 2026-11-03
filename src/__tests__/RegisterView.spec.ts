@@ -9,7 +9,7 @@ import { mountWithPlugins } from './helpers/mount'
 
 let api: ApiMock
 beforeEach(() => {
-  api = mockApi().on('GET', '/api/faqs/?lang=it', { body: [] })
+  api = mockApi()
 })
 
 const mountRegister = () => mountWithPlugins(RegisterView, { route: '/register' })
@@ -149,9 +149,7 @@ describe('RegisterView', () => {
     expect(button(wrapper, 'Crea account').attributes('disabled')).toBeUndefined()
   })
 
-  // An error keyed by a field the form does not render (DRF's
-  // non_field_errors, or a student field after switching to a staff address)
-  // goes to the alert, or the user would see nothing at all.
+  // Errors on fields the form does not show go to the alert.
   it('tells the user about an error on a field the form does not show', async () => {
     api.on('POST', '/api/auth/register/', {
       status: 400,
