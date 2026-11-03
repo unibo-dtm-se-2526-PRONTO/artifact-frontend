@@ -111,8 +111,7 @@ describe('the application shell', () => {
       expect(wrapper.find('nav').exists()).toBe(false)
     })
 
-    // auth.logout() clears the session even when the request fails, so the
-    // user must still reach the login page, with no unhandled error.
+    // Logout clears the session even if the request fails.
     it('signs out to the login even when the logout request fails', async () => {
       api.on('POST', '/api/auth/logout/', { networkError: true })
       const { wrapper, router } = await mountApp(fx.studentUser(), '/bookings')

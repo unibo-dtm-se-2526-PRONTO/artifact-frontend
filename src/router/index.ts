@@ -30,7 +30,7 @@ const router = createRouter({
       meta: { public: true },
     },
 
-    // — studente —
+    // studente
     {
       path: '/ask',
       name: 'ask',
@@ -56,7 +56,7 @@ const router = createRouter({
       meta: { role: 'STUDENT' },
     },
 
-    // — dipendente —
+    // dipendente
     {
       path: '/queue',
       name: 'queue',

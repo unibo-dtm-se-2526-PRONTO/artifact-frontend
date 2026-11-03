@@ -3,13 +3,7 @@ import { defineStore } from 'pinia'
 
 import type { Appointment, Inquiry, OfficeCode, SuggestedFaq } from '@/api/types'
 
-/**
- * La prenotazione in corso, dalla domanda alla conferma (US2a–US2d).
- *
- * Vive in uno store e non nell'URL perché attraversa tre schermate (domanda,
- * slot, conferma) e porta con sé il testo della domanda e la FAQ già proposta,
- * che il dipendente riceve insieme all'appuntamento.
- */
+/** La prenotazione in corso, dalla domanda alla conferma (US2a-US2d). */
 export const useBookingStore = defineStore('booking', () => {
   const office = ref<OfficeCode | null>(null)
   const question = ref('')

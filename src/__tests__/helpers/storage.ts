@@ -1,10 +1,6 @@
 /**
- * Runs first (vitest.config.ts → setupFiles), before any app module reads
- * storage at import time.
- *
- * Node 25 ships its own `localStorage`, which without `--localstorage-file` is
- * an empty object, and it shadows the jsdom one Vitest installs. Hand the
- * globals back to jsdom so tests see a real Web Storage on every Node version.
+ * Runs first. Node 25's own `localStorage` shadows jsdom's: give it back to
+ * jsdom so every Node version sees a real Web Storage.
  */
 import type { JSDOM } from 'jsdom'
 

@@ -98,8 +98,7 @@ const officeNumber = (i: number) => String(i + 1).padStart(2, '0')
     <div v-if="error" class="error" role="alert">{{ error }}</div>
 
     <section v-if="inquiry" class="result" aria-live="polite">
-      <!-- Solo la risposta: la domanda della FAQ e il punteggio sono dettagli
-           interni della ricerca, non servono allo studente. -->
+      <!-- Solo la risposta, senza domanda della FAQ e punteggio. -->
       <template v-if="inquiry.match">
         <div class="answer">
           <div class="kicker" style="font-size: 10px; margin: 0 0 9px">

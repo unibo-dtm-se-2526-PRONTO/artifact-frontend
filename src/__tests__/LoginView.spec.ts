@@ -84,8 +84,7 @@ describe('LoginView', () => {
   })
 
   it('gives a deactivated account the same generic message', async () => {
-    // An administrator can deactivate an account; the backend then refuses its
-    // login exactly as a wrong password, without revealing that it exists.
+    // A deactivated account is refused like a wrong password.
     api.on('POST', '/api/auth/login/', INVALID)
 
     const { wrapper } = await signIn('nuovo.utente@studio.unibo.it', 'giusta-ma-disattivato')

@@ -1,4 +1,4 @@
-/* Modernist — design-system tokens and component classes. This file is the source of truth for the system's look; retune it here and see readme.md. */
+/* Design tokens and component classes of the Modernist design system. */
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
 
 :root {
@@ -9,8 +9,7 @@
   --color-accent-2: #e15b47;
   --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
 
-  /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
-     same step of any role matches the others in visual value. */
+  /* Tonal ramps in OKLCH, on one shared lightness scale. */
   --color-neutral-100: #f8f4f4;
   --color-neutral-200: #eae7e7;
   --color-neutral-300: #d7d3d3;
@@ -56,8 +55,7 @@
   --radius-md: 0px;
   --radius-lg: 0px;
 
-  /* Elevation — derived from the ground: soft ink-tinted shadows on a
-     light theme, a hairline edge + ambient darkness on a dark one. */
+  /* Elevation */
   --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
   --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
   --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
@@ -80,11 +78,7 @@ h4 {
   filter: grayscale(1) contrast(1.08);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   Components — built with the tokens above. Plain CSS
-   on plain HTML: no JavaScript, no build step. Each class is documented in
-   readme.md and demonstrated in foundations/ and components/.
-   ══════════════════════════════════════════════════════════════════════ */
+/* Components, built with the tokens above */
 
 *,
 *::before,
@@ -164,7 +158,7 @@ figcaption {
   background: color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
-/* — rules — */
+/* rules */
 .hr {
   height: 2px;
   border: 0;
@@ -172,7 +166,7 @@ figcaption {
   background: var(--color-divider);
 }
 
-/* — buttons — */
+/* buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -186,8 +180,7 @@ figcaption {
   line-height: 1.2;
   color: var(
     --color-text
-  ); /* matches the .input's 14px —
-     the pair sits side by side in sign-up rows */
+  ); /* same as .input, which sits next to it */
   background: transparent;
   border: 1px solid transparent;
   padding: var(--space-2) calc(var(--space-3) * 1.2);
@@ -241,7 +234,7 @@ figcaption {
   text-align: left;
 }
 
-/* — forms — */
+/* forms */
 .field > label {
   display: block;
   font-size: 12px;
@@ -334,7 +327,7 @@ textarea.input {
   outline-offset: -2px;
 }
 
-/* — cards — */
+/* cards */
 .card {
   display: flex;
   flex-direction: column;
@@ -378,7 +371,7 @@ textarea.input {
   box-shadow: var(--shadow-lg);
 }
 
-/* — tags — */
+/* tags */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -404,7 +397,7 @@ textarea.input {
   color: var(--color-accent);
 }
 
-/* — navigation — */
+/* navigation */
 .nav {
   display: flex;
   align-items: center;
@@ -428,7 +421,7 @@ textarea.input {
   color: var(--color-accent);
 }
 
-/* — tables — */
+/* tables */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -451,7 +444,7 @@ textarea.input {
   background: color-mix(in srgb, var(--color-text) 4%, transparent);
 }
 
-/* — dialog — */
+/* dialog */
 .dialog-backdrop {
   position: fixed;
   inset: 0;

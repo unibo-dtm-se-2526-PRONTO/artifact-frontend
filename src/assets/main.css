@@ -1,8 +1,6 @@
 /*
- * Stili dell'app PRONTO. I token e i componenti base (.btn, .input, .field,
- * .table, .tag, .hr, .dialog…) vengono dal design system Modernist in
- * modernist.css; qui solo i pattern ricorrenti delle schermate del design
- * "Pronto Helpdesk", sempre costruiti sulle sue variabili.
+ * Stili dell'app PRONTO. Token e componenti base sono in modernist.css; qui
+ * i pattern delle schermate, costruiti sulle sue variabili.
  */
 @import './modernist.css';
 
@@ -19,7 +17,7 @@ button {
   font: inherit;
 }
 
-/* — testo — */
+/* testo */
 .kicker {
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -70,7 +68,7 @@ button {
   margin-top: 4px;
 }
 
-/* — shell — */
+/* shell */
 .topbar {
   display: flex;
   align-items: center;
@@ -232,7 +230,7 @@ button {
   font-weight: 800;
 }
 
-/* — login / registrazione — */
+/* login / registrazione */
 .split {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -270,7 +268,7 @@ button {
   gap: 12px;
 }
 
-/* — chiedi — */
+/* chiedi */
 .searchbar {
   display: flex;
   max-width: 760px;
@@ -375,7 +373,7 @@ button {
   color: var(--color-accent);
 }
 
-/* — slot — */
+/* slot */
 .two-col {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
@@ -475,7 +473,7 @@ button {
   border-bottom: 0;
 }
 
-/* — riepilogo — */
+/* riepilogo */
 .summary {
   border-top: 2px solid var(--color-text);
 }
@@ -497,7 +495,7 @@ button {
   flex: 1;
 }
 
-/* — elenchi prenotazioni — */
+/* elenchi prenotazioni */
 .list {
   display: flex;
   flex-direction: column;
@@ -533,7 +531,7 @@ button {
   color: var(--color-neutral-600);
 }
 
-/* — turni — */
+/* turni */
 .shift-row {
   display: flex;
   align-items: center;
