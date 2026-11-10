@@ -2,6 +2,24 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+## Releases
+
+Every release on `main` is made by semantic-release and ships the app in two forms:
+
+- **npm**: [`pronto-helpdesk-frontend`](https://www.npmjs.com/package/pronto-helpdesk-frontend), holding the built site in `dist/`.
+- **Docker**: `ghcr.io/unibo-dtm-se-2526-pronto/pronto-helpdesk-frontend`, tagged `<version>` and `latest`, for amd64 and arm64.
+
+The built site calls the backend on its own origin (`.env.production`), so whatever serves it must forward `/api/`, `/admin/` and `/static/` to the backend. The image does this with nginx, towards `BACKEND_URL` (default `http://backend:8000`, the backend service of docker compose):
+
+```sh
+docker run -p 8080:80 -e BACKEND_URL=http://host.docker.internal:8000 \
+  ghcr.io/unibo-dtm-se-2526-pronto/pronto-helpdesk-frontend
+```
+
+The app is then on http://localhost:8080. Locally, `npm run build && npm run preview` does the same, forwarding to the backend on http://localhost:8000.
+
+The npm publish needs the `NPM_TOKEN` repository secret: a granular access token from npmjs.com with read and write access to packages.
+
 ## Recommended IDE Setup
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).

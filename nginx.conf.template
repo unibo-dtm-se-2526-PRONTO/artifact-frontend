@@ -1,0 +1,25 @@
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+
+    # Same origin for the app and the API, so the browser needs no CORS.
+    # Django's admin and its static files go through as well.
+    location ~ ^/(api|admin|static)/ {
+        proxy_pass ${BACKEND_URL};
+        # The host the browser asked for, which ALLOWED_HOSTS and the CSRF
+        # check of the admin compare against.
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Vite puts a hash in every file name under assets/.
+    location /assets/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # Every other path is a route of the Vue router (history mode).
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
