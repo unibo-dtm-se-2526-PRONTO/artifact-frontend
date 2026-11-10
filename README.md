@@ -1,77 +1,102 @@
-# frontend
+# PRONTO frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+PRONTO automates the phone helpdesk of the Campus of Cesena. Students look for
+an answer among the FAQs of each office and, when none helps, book an
+appointment with the office's staff.
 
-## Releases
+This is the web app: Vue 3, TypeScript, Pinia and Vue Router, built with Vite.
+The API is the Django backend in the separate
+[artifact-backend](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-backend)
+repository.
 
-Every release on `main` is made by semantic-release and ships the app in two forms:
+| Who | Pages |
+|-----|-------|
+| Everyone | `/login`, `/register` |
+| Students (`@studio.unibo.it`) | `/ask` (questions and FAQs), `/book/slots` and `/book/confirm` (booking), `/bookings` |
+| Employees (`@unibo.it`) | `/queue` (the office's appointments), `/availability` (weekly shifts), `/profile` |
 
-- **npm**: [`pronto-helpdesk-frontend`](https://www.npmjs.com/package/pronto-helpdesk-frontend), holding the built site in `dist/`.
-- **Docker**: `ghcr.io/unibo-dtm-se-2526-pronto/pronto-helpdesk-frontend`, tagged `<version>` and `latest`, for amd64 and arm64.
+The interface is in Italian and English.
 
-The built site calls the backend on its own origin (`.env.production`), so whatever serves it must forward `/api/`, `/admin/` and `/static/` to the backend. The image does this with nginx, towards `BACKEND_URL` (default `http://backend:8000`, the backend service of docker compose):
+## Getting started
 
-```sh
-docker run -p 8080:80 -e BACKEND_URL=http://host.docker.internal:8000 \
-  ghcr.io/unibo-dtm-se-2526-pronto/pronto-helpdesk-frontend
-```
-
-The app is then on http://localhost:8080. Locally, `npm run build && npm run preview` does the same, forwarding to the backend on http://localhost:8000.
-
-The npm publish needs the `NPM_TOKEN` repository secret: a granular access token from npmjs.com with read and write access to packages.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+You need Node.js `^22.18.0` or `>=24.12.0`, and the backend running on
+<http://localhost:8000> (see its README).
 
 ```sh
 npm install
+npm run dev          # http://localhost:5173, with hot reload
 ```
 
-### Compile and Hot-Reload for Development
+The backend allows requests from <http://localhost:5173> only (CORS). The
+development `docker-compose.yml` of the backend repository also starts this app
+on that address, from a clone of this repository next to it.
+
+### Scripts
+
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Development server |
+| `npm run build` | Type check and production build in `dist/` |
+| `npm run preview` | Serves `dist/` on <http://localhost:4173>, forwarding the API to <http://localhost:8000> |
+| `npm run test:unit` | Tests, see [Testing](#testing) |
+| `npm run lint` | oxlint and ESLint, fixing what they can |
+| `npm run format` | Prettier on `src/` |
+
+## Configuration
+
+| File | Used by | `VITE_API_URL` |
+|------|---------|----------------|
+| `.env` | `npm run dev` | `http://localhost:8000`, the backend on this machine |
+| `.env.production` | `npm run build` | `/`: the API on the app's own origin |
+| `.env.local` | both, not versioned | your own values, overriding the two above |
+
+`VITE_*` values are compiled into the JavaScript the browser downloads, so they
+are public: never put secrets in them.
+
+The production build calls the API on its own origin, so the same build works
+with any backend address and the browser needs no CORS. Whatever serves it
+must forward `/api/`, `/admin/` and `/static/` to the backend: nginx in the
+Docker image, the proxy of `npm run preview` locally.
+
+## Using a release
+
+Each release ships the built app in two forms.
+
+### Docker
+
+`ghcr.io/unibo-dtm-se-2526-pronto/pronto-helpdesk-frontend`, tagged with the
+version and `latest`, for amd64 and arm64. nginx serves the app on port 80 and
+forwards the API to `BACKEND_URL`, by default `http://backend:8000`, the
+backend service of a compose file. It starts even when the backend is not
+reachable: the app loads, and the API answers 502 until the backend is up.
+
+The whole application, database and backend included, runs from the released
+images with `docker-compose.release.yml` of the backend repository:
 
 ```sh
-npm run dev
+docker compose -f docker-compose.release.yml up -d   # in artifact-backend
 ```
 
-### Type-Check, Compile and Minify for Production
+and is then on <http://localhost:8080>. The image alone, against a backend
+running on this machine:
 
 ```sh
-npm run build
+docker run --rm -p 8080:80 -e BACKEND_URL=http://host.docker.internal:8000 \
+  ghcr.io/unibo-dtm-se-2526-pronto/pronto-helpdesk-frontend
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### npm
+
+[`pronto-helpdesk-frontend`](https://www.npmjs.com/package/pronto-helpdesk-frontend)
+holds only the built app, in `dist/`:
 
 ```sh
-npm run test:unit
+npm install pronto-helpdesk-frontend
+# node_modules/pronto-helpdesk-frontend/dist/
 ```
 
-See [Testing](#testing).
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Serve it as static files with the same forwarding as above, and send every
+other path to `index.html` (the router uses the history mode).
 
 ## Testing
 
@@ -144,16 +169,29 @@ as the `coverage-report-<sha>` artifact.
 after CI, on `main` only. It reads the commit messages, which therefore follow
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): `feat`
 makes a minor release, `fix` and `docs` a patch, a `!` a major one, while
-`chore`, `ci`, `test` and `refactor` make none. A release is a git tag, a
-GitHub release, the new version in `package.json` and an entry in
-`CHANGELOG.md`, committed back as `chore(release): …`. Nothing is published to
-npm.
+`chore`, `ci`, `test` and `refactor` make none. Commit messages are checked on
+every pull request (`.github/workflows/commitlint.yml`, rules in
+`commitlint.config.mjs`).
 
-The workflow pushes with the token GitHub Actions generates for every run, so
-tag and GitHub release come from `github-actions[bot]` and the release commit
-from `semantic-release-bot`; it needs no secret. Commit messages are checked
-on every pull request
-(`.github/workflows/commitlint.yml`, rules in `commitlint.config.mjs`).
+A release, configured in `release.config.mjs`:
+
+1. writes the new version into `package.json` and an entry into `CHANGELOG.md`;
+2. builds `dist/` and publishes it to npm;
+3. builds the Docker image for amd64 and arm64 and pushes it to GHCR as the
+   version and `latest`;
+4. creates the git tag and the GitHub release, and commits the version back as
+   `chore(release): …`.
+
+The npm publish uses the `NPM_TOKEN` repository secret, a granular access token
+from npmjs.com with read and write access to packages. Everything else uses the
+token GitHub Actions generates for every run: tag and GitHub release come from
+`github-actions[bot]`, the release commit from `semantic-release-bot`, and the
+image is pushed with the `packages: write` permission. A new package on GHCR is
+private until its visibility is changed in its settings.
 
 The version is compiled into the app as `__APP_VERSION__` (`vite.config.ts`)
 and shown in the user menu and in the tooltip of the logo.
+
+## License
+
+Apache 2.0
