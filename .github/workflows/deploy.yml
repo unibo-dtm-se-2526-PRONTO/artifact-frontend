@@ -55,12 +55,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      # dist/ is what the npm package ships (package.json "files").
       - name: Release
         shell: bash
         run: |
           npm ci
-          npm run build-only
           npx semantic-release
         env:
           # Granular access token from npmjs.com, with read and write access
