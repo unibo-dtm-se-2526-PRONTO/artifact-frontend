@@ -22,4 +22,11 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  // La build chiama il backend sulla propria origine (.env.production): in
+  // "npm run preview" lo raggiunge così, come fa nginx nell'immagine Docker.
+  preview: {
+    proxy: Object.fromEntries(
+      ['/api', '/admin', '/static'].map((path) => [path, 'http://localhost:8000']),
+    ),
+  },
 })
