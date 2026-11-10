@@ -18,6 +18,9 @@ FROM nginx:1.29-alpine
 # Where nginx forwards /api/, /admin/ and /static/: the backend service of
 # docker compose by default.
 ENV BACKEND_URL=http://backend:8000
+# The image's entrypoint reads the container's resolvers into
+# NGINX_LOCAL_RESOLVERS, used by nginx.conf.template.
+ENV NGINX_ENTRYPOINT_LOCAL_RESOLVERS=1
 
 # The image fills ${BACKEND_URL} in at start and writes conf.d/default.conf.
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
