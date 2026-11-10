@@ -7,11 +7,7 @@ import { detailError, mockApi, type ApiMock } from './helpers/fetch'
 import * as fx from './helpers/fixtures'
 import { freshPinia } from './helpers/mount'
 
-/**
- * The guard is registered on the app's singleton router, so each test imports
- * a fresh copy of the router module (and the client and store behind it) after
- * setting up storage, exactly as a page load would.
- */
+/** Each test imports a fresh router module after setting up storage, like a page load. */
 async function loadApp(saved: { user?: User } = {}) {
   vi.resetModules()
   if (saved.user) {

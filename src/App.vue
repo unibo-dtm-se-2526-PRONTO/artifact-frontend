@@ -40,7 +40,9 @@ const appVersion = __APP_VERSION__
 async function signOut() {
   menuOpen.value = false
   useBookingStore().reset()
-  await auth.logout()
+  // logout() cancella la sessione anche se la richiesta fallisce: l'utente
+  // è comunque uscito, quindi l'errore non deve fermarlo su questa pagina.
+  await auth.logout().catch(() => {})
   router.push({ name: 'login' })
 }
 </script>

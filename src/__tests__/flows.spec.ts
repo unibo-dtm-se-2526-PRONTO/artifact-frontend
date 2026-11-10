@@ -37,7 +37,6 @@ let api: ApiMock
 beforeEach(() => {
   freezeTime()
   api = mockApi()
-  api.on('GET', '/api/faqs/?lang=it', { body: [fx.faq()] })
   api.on('GET', '/api/offices/?lang=it', { body: fx.offices() })
 })
 

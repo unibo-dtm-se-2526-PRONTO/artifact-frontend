@@ -1,9 +1,6 @@
 /**
- * Runs before every test file (vitest.config.ts → setupFiles).
- *
- * - no test can reach the network: `fetch` is always the mock of ./fetch.ts, and
- *   a request the test did not mock fails it, even if the app caught the error
- * - storage, the session token, the language and the clock start clean
+ * Runs before every test file: `fetch` is mocked, and storage, token,
+ * language and clock start clean.
  */
 import { enableAutoUnmount } from '@vue/test-utils'
 import { getActivePinia } from 'pinia'
@@ -24,8 +21,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  // Stop the stores' watchers before resetting the language, so the offices
-  // store does not reload in the background once the mocks are gone.
+  // Stop the watchers first, so the offices store does not reload.
   const pinia = getActivePinia() as { _s?: Map<string, { $dispose(): void }> } | undefined
   pinia?._s?.forEach((store) => store.$dispose())
 

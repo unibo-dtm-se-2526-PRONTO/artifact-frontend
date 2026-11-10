@@ -1,10 +1,4 @@
-/**
- * Freezing "now". Only `Date` is faked: timers and promises keep running, so
- * `flushPromises` and the fetch mock work as usual.
- *
- * The suite runs in Europe/Rome (see vitest.config.ts), so instants are written
- * with their offset and read back as the office's local time.
- */
+/** Freezing "now": only `Date` is faked. The suite runs in Europe/Rome. */
 import { vi } from 'vitest'
 
 /** Monday 5 October 2026, 10:00 in Cesena. */

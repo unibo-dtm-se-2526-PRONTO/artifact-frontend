@@ -1,7 +1,5 @@
 /**
- * A typed stand-in for the backend: `globalThis.fetch` is replaced by a router
- * that answers by method and path, and records every request so tests can
- * assert on what the app sent.
+ * A fake backend: `fetch` answers by method and path and records each request.
  *
  *   const api = mockApi()
  *   api.on('GET', '/api/offices/', { body: offices })
@@ -9,9 +7,7 @@
  *   ...
  *   expect(api.last('POST', '/api/auth/login/')?.body).toEqual({ email, password })
  *
- * A request nobody mocked is answered with a network error *and* recorded:
- * the global setup fails the test if any was left, so a view that swallows
- * errors cannot hide a missing mock. Nothing ever reaches the network.
+ * An unmocked request gets a network error and fails the test.
  */
 import { vi } from 'vitest'
 

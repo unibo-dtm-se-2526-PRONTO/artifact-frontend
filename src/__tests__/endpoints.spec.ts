@@ -182,13 +182,5 @@ describe('endpoints', () => {
       await expect(api.resolveQuestion(id)).resolves.toMatchObject({ resolved: true })
       expect(sent()).toMatchObject({ method: 'POST', url: `/api/questions/${id}/resolve/` })
     })
-
-    it('countFaqs counts the published FAQs', async () => {
-      mock.on('GET', '/api/faqs/', { body: [fx.faq(), fx.faq({ id: 4 }), fx.faq({ id: 5 })] })
-      setLang('en')
-
-      await expect(api.countFaqs()).resolves.toBe(3)
-      expect(sent()).toMatchObject({ method: 'GET', url: '/api/faqs/?lang=en' })
-    })
   })
 })

@@ -1,7 +1,6 @@
 {
-  "name": "frontend",
+  "name": "pronto-helpdesk-frontend",
   "version": "1.0.0",
-  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -22,6 +21,7 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
+    "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/npm": "^13.1.5",
@@ -53,5 +53,18 @@
   },
   "engines": {
     "node": "^22.18.0 || >=24.12.0"
+  },
+  "description": "Vue frontend of Pronto, the helpdesk of Campus Cesena: the built static site, ready to be served behind a proxy to the backend",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend.git"
+  },
+  "homepage": "https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }

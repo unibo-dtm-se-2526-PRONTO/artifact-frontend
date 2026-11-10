@@ -22,10 +22,15 @@ const errors = ref<Record<string, string>>({})
 const error = ref('')
 const busy = ref(false)
 
-// Il ruolo lo decide il backend dal dominio (US0/US1); qui serve solo a
-// mostrare i campi giusti: matricola e corso sono richiesti agli studenti
-// e rifiutati a tutti gli altri.
+// Il ruolo lo decide il backend dal dominio; qui sceglie i campi da mostrare.
 const isStudent = computed(() => form.email.trim().toLowerCase().endsWith('@studio.unibo.it'))
+const shownFields = computed(() => [
+  'first_name',
+  'last_name',
+  'email',
+  'password',
+  ...(isStudent.value ? ['matricola', 'degree_programme'] : []),
+])
 
 async function submit() {
   errors.value = {}
@@ -47,7 +52,10 @@ async function submit() {
   } catch (e) {
     if (e instanceof ApiError) {
       errors.value = e.fieldErrors
-      if (!Object.keys(errors.value).length) error.value = e.detail
+      // Gli errori su campi non mostrati vanno nell'avviso.
+      const hidden = Object.keys(errors.value).filter((f) => !shownFields.value.includes(f))
+      if (hidden.length) error.value = hidden.map((f) => errors.value[f]).join(' ')
+      else if (!Object.keys(errors.value).length) error.value = e.detail
     } else {
       error.value = t('genericError')
     }
