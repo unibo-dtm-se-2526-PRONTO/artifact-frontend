@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/compare/1.1.0...1.1.1) (2026-11-10)
+
+### Bug Fixes
+
+* **docker:** start nginx even when the backend is not reachable yet ([4213e5b](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/commit/4213e5bd8cac8acb11b6658667e706cb770d4a0e))
+
 ## [1.1.0](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/compare/1.0.0...1.1.0) (2026-11-10)
 
 ### Features
