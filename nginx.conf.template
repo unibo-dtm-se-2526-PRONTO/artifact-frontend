@@ -2,10 +2,16 @@ server {
     listen 80;
     root /usr/share/nginx/html;
 
+    # The resolvers of the container (NGINX_ENTRYPOINT_LOCAL_RESOLVERS in the
+    # Dockerfile): the backend's name is looked up at each request, not at
+    # start, so nginx serves the site even when the backend is not up yet.
+    resolver ${NGINX_LOCAL_RESOLVERS} valid=10s;
+
     # Same origin for the app and the API, so the browser needs no CORS.
     # Django's admin and its static files go through as well.
     location ~ ^/(api|admin|static)/ {
-        proxy_pass ${BACKEND_URL};
+        set $backend ${BACKEND_URL};
+        proxy_pass $backend;
         # The host the browser asked for, which ALLOWED_HOSTS and the CSRF
         # check of the admin compare against.
         proxy_set_header Host $http_host;
