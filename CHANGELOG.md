@@ -1,3 +1,13 @@
+## [1.1.2](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/compare/1.1.1...1.1.2) (2026-11-11)
+
+### Bug Fixes
+
+* **release:** build the npm package after the version is bumped ([9ef6698](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/commit/9ef66984dbcf66b9248e50e668263b954cc92d87))
+
+### Documentation
+
+* **readme:** describe the app, its configuration and how releases ship it ([f43049e](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/commit/f43049e551dfe9c027b5e8038bdba5dcf9fa716c))
+
 ## [1.1.1](https://github.com/unibo-dtm-se-2526-PRONTO/artifact-frontend/compare/1.1.0...1.1.1) (2026-11-10)
 
 ### Bug Fixes
