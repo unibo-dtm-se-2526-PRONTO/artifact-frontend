@@ -12,6 +12,11 @@
       "description": "Updates to GitHub Actions should be tagged as 'ci'",
       "matchPaths": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
       "semanticCommitType": "ci"
+    },
+    {
+      "description": "The libraries bundled in dist/ change the published app: a patch release",
+      "matchPackageNames": ["vue", "vue-router", "pinia"],
+      "semanticCommitType": "fix"
     }
   ],
   "prConcurrentLimit": 25,
