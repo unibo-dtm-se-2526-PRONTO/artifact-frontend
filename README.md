@@ -88,7 +88,9 @@ docker run --rm -p 8080:80 -e BACKEND_URL=http://host.docker.internal:8000 \
 ### npm
 
 [`pronto-helpdesk-frontend`](https://www.npmjs.com/package/pronto-helpdesk-frontend)
-holds only the built app, in `dist/`:
+holds only the built app, in `dist/`, and installs no dependencies: Vue, Vue
+Router and Pinia are already in the bundle, and their licenses are in
+`dist/.vite/license.md`.
 
 ```sh
 npm install pronto-helpdesk-frontend
