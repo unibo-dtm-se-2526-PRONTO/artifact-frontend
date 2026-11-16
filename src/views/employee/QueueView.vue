@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 
 import { ApiError } from '@/api/client'
-import { completeAppointment, listAppointments } from '@/api/endpoints'
+import { cancelAppointment, completeAppointment, listAppointments } from '@/api/endpoints'
 import type { Appointment } from '@/api/types'
 import StatusTag from '@/components/StatusTag.vue'
 import { shortDate, time } from '@/format'
@@ -37,6 +37,20 @@ const shown = computed(() => {
 
 /** FR12: solo un appuntamento già iniziato si può chiudere. */
 const completable = (a: Appointment) => a.status === 'BOOKED' && new Date(a.slot) <= new Date()
+
+/** FR11: come lo studente, il dipendente annulla solo prima dell'inizio. */
+const cancellable = (a: Appointment) => a.status === 'BOOKED' && new Date(a.slot) > new Date()
+
+async function cancel(a: Appointment) {
+  if (!window.confirm(t('cancelConfirm'))) return
+  error.value = ''
+  try {
+    await cancelAppointment(a.id)
+    await load()
+  } catch (e) {
+    error.value = e instanceof ApiError ? e.detail : t('genericError')
+  }
+}
 
 async function complete(a: Appointment) {
   error.value = ''
@@ -106,6 +120,15 @@ async function complete(a: Appointment) {
                 @click="complete(a)"
               >
                 {{ t('complete') }}
+              </button>
+              <button
+                v-if="cancellable(a)"
+                type="button"
+                class="btn btn-ghost"
+                style="font-size: 12.5px"
+                @click="cancel(a)"
+              >
+                {{ t('cancel') }}
               </button>
             </td>
           </tr>
