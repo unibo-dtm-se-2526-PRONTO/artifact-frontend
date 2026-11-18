@@ -17,6 +17,11 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  // The bundle contains Vue, Vue Router and Pinia, whose MIT licenses ask to
+  // keep their notices: Vite writes them to dist/.vite/license.md.
+  build: {
+    license: true,
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
