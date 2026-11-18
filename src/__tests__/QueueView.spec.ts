@@ -1,5 +1,5 @@
 import { flushPromises } from '@vue/test-utils'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import QueueView from '@/views/employee/QueueView.vue'
 
@@ -80,6 +80,7 @@ describe('QueueView', () => {
       'Lucia Verdi',
       'Posso anticipare il tirocinio?',
       'Prenotato',
+      'Annulla',
     ])
   })
 
@@ -143,6 +144,66 @@ describe('QueueView', () => {
     const { wrapper } = await mountQueue()
 
     await click(button(wrapper, 'Completa'))
+
+    expect(alertText(wrapper)).toBe('Qualcosa è andato storto. Riprova.')
+  })
+
+  it('offers to cancel only booked appointments that have not started', async () => {
+    api.on('GET', LIST, { body: [later, startedEarlier, done, cancelled] })
+    const { wrapper } = await mountQueue()
+    await click(button(wrapper, 'Tutti'))
+
+    // oldest first: completed, cancelled, started, later
+    expect(bodyRows(wrapper).map((r) => queryButtons(r, 'Annulla').length)).toEqual([0, 0, 0, 1])
+  })
+
+  it('cancels after confirmation, then reloads', async () => {
+    api.on('GET', LIST, { body: [later] })
+    api.on('POST', '/api/appointments/44/cancel/', { status: 204 })
+    const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
+    const { wrapper } = await mountQueue()
+    api.on('GET', LIST, { body: [{ ...later, status: 'CANCELLED' }] })
+
+    await click(button(wrapper, 'Annulla'))
+
+    expect(confirm).toHaveBeenCalledWith('Annullare l’appuntamento? Lo slot tornerà disponibile.')
+    expect(api.calls('POST', '/api/appointments/44/cancel/')).toHaveLength(1)
+    expect(api.calls('GET', LIST)).toHaveLength(2)
+    expect(pageText(wrapper)).toContain('Nessun appuntamento assegnato.')
+  })
+
+  it('does nothing when the employee changes their mind', async () => {
+    api.on('GET', LIST, { body: [later] })
+    vi.spyOn(window, 'confirm').mockReturnValue(false)
+    const { wrapper } = await mountQueue()
+
+    await click(button(wrapper, 'Annulla'))
+
+    expect(api.calls('POST', '/api/appointments/44/cancel/')).toHaveLength(0)
+  })
+
+  it('shows why a cancellation was refused', async () => {
+    api.on('GET', LIST, { body: [later] })
+    api.on(
+      'POST',
+      '/api/appointments/44/cancel/',
+      detailError(400, 'Only a booked appointment can be cancelled.'),
+    )
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    const { wrapper } = await mountQueue()
+
+    await click(button(wrapper, 'Annulla'))
+
+    expect(alertText(wrapper)).toBe('Only a booked appointment can be cancelled.')
+  })
+
+  it('shows a generic message when a cancellation cannot be sent', async () => {
+    api.on('GET', LIST, { body: [later] })
+    api.on('POST', '/api/appointments/44/cancel/', { networkError: true })
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    const { wrapper } = await mountQueue()
+
+    await click(button(wrapper, 'Annulla'))
 
     expect(alertText(wrapper)).toBe('Qualcosa è andato storto. Riprova.')
   })
